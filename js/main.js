@@ -27,8 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (window.innerWidth <= 768) {
                 newLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    item.classList.toggle('active');
+                    // Only prevent default for dropdown parent links, not regular anchor links
+                    if (item.querySelector('.sub-menu')) {
+                        e.preventDefault();
+                        item.classList.toggle('active');
+                    }
+                });
+            } else {
+                // On desktop, allow the "How To Watch" main link to work
+                newLink.addEventListener('click', function(e) {
+                    if (item.querySelector('.sub-menu') && newLink.getAttribute('href') !== '#') {
+                        // Allow the main "How To Watch" link to navigate
+                        return true;
+                    }
                 });
             }
         });
@@ -44,10 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             
             if (targetId !== '#') {
-                e.preventDefault();
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
+                    e.preventDefault();
                     const headerHeight = document.querySelector('.site-header').offsetHeight;
                     const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
                     
@@ -60,6 +71,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (mainNavigation.classList.contains('active')) {
                         mainNavigation.classList.remove('active');
                         mobileMenuToggle.classList.remove('active');
+                    }
+                } else {
+                    // If target doesn't exist, scroll to the parent section (How To Watch)
+                    const howToWatchSection = document.querySelector('#how-to-watch');
+                    if (howToWatchSection) {
+                        e.preventDefault();
+                        const headerHeight = document.querySelector('.site-header').offsetHeight;
+                        const targetPosition = howToWatchSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (mainNavigation.classList.contains('active')) {
+                            mainNavigation.classList.remove('active');
+                            mobileMenuToggle.classList.remove('active');
+                        }
                     }
                 }
             }
