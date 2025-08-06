@@ -169,13 +169,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Track clicks on streaming guide cards
+    // Track clicks on streaming guide cards (now they are links)
     const guideCards = document.querySelectorAll('.guide-card');
     
     guideCards.forEach(card => {
         card.addEventListener('click', function() {
             const platform = this.querySelector('h3').textContent;
             trackEvent('Streaming Guide', 'Click', platform);
+            // Don't prevent default - let the link work
         });
     });
     

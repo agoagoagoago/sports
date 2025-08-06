@@ -250,17 +250,24 @@ body {
     margin-top: 1.5rem;
 }
 
-.guide-card {
+a.guide-card {
+    display: block;
     padding: 1.5rem;
     background: #f8f8f8;
     border-radius: 8px;
-    transition: background 0.3s, transform 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    border: 2px solid transparent;
 }
 
-.guide-card:hover {
-    background: #e8e8e8;
+a.guide-card:hover {
+    background: #fff;
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #0066cc;
 }
 
 .guide-card h3 {
@@ -271,6 +278,19 @@ body {
 .guide-card p {
     color: #666;
     font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.card-link {
+    color: #0066cc;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+a.guide-card:hover .card-link {
+    transform: translateX(5px);
 }
 
 /* Footer */
