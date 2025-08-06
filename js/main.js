@@ -17,16 +17,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Dropdown Menu for Mobile
     const dropdownItems = document.querySelectorAll('.has-dropdown');
     
-    dropdownItems.forEach(item => {
-        const link = item.querySelector('a');
-        
-        if (window.innerWidth <= 768) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                item.classList.toggle('active');
-            });
-        }
-    });
+    function setupDropdowns() {
+        dropdownItems.forEach(item => {
+            const link = item.querySelector('a');
+            
+            // Remove existing event listeners
+            link.replaceWith(link.cloneNode(true));
+            const newLink = item.querySelector('a');
+            
+            if (window.innerWidth <= 768) {
+                newLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    item.classList.toggle('active');
+                });
+            }
+        });
+    }
+    
+    setupDropdowns();
     
     // Smooth Scrolling for Anchor Links
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -167,6 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.classList.remove('active');
                 });
             }
+            
+            // Reinitialize dropdowns for new screen size
+            setupDropdowns();
         }, 250);
     });
     
